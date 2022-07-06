@@ -13,7 +13,7 @@ const userSchem = new Schema({
             validator: function (v) {
                 return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(v)
             },
-            message: `Invaid Email`
+            message: (prop) => `Invaid Email ${prop.value}`
         },
     },
     password: {
@@ -26,7 +26,7 @@ const userSchem = new Schema({
         type: [String],
         default: ['STUDENT']
     },
-    acountStatus: {
+    accountStatus: {
         type: String,
         enum: ['ACTIVE', 'PENDING', 'REJECTED'],
         default: 'PENDING'

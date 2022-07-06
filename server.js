@@ -1,22 +1,30 @@
 const express = require("express")
-const app = express()
+const morgan = require("morgan");
+const cors = require("cors");
+const dotenv = require("dotenv");
 const { connect } = require('mongoose')
 const router = require('./routes')
+const app = express()
 
+dotenv.config();
 app.use(express.json())
+app.use(cors());
+app.use(morgan("dev"));
 
 app.use(router)
 
 app.use((err, req, res, next) => {
-    console.log(err)
-    res.send(500).json({ message: "Server Error" })
+    console.log(err);
+    res.status(500).json({ message: err && err.message || "Server Error" })
 })
 
 connect('mongodb://localhost:27017/new-db')
     .then(() => {
         console.log("Database connected");
-        app.listen(8000, () => {
-            console.log("Server is running ...");
-        });
-    }).catch((err) => console.log(err))
+    })
+    .catch((err) => console.log(err))
 
+const PORT = process.env.PORT || 3005
+app.listen(PORT, () => {
+    console.log(`Server is running port ${PORT}`);
+});
