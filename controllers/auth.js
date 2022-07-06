@@ -27,7 +27,32 @@ exports.registration = async (req, res, next) => {
     }
 }
 
-// exports.login = async (req, res) => {
-//     res.send("hello")
-// }
+exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        let user = await User.findOne({ email }).lean()
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid credentials"
+            })
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password)
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Invalid credentials",
+            })
+        }
+
+        delete user.password
+
+        return res.status(200).json({
+            message: "User login successfully",
+            user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 

@@ -24,7 +24,7 @@ connect('mongodb://localhost:27017/new-db')
     })
     .catch((err) => console.log(err))
 
-const PORT = process.env.PORT || 3005
+const PORT = process.env.PORT || 4005
 app.listen(PORT, () => {
     console.log(`Server is running port ${PORT}`);
 });

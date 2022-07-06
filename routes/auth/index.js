@@ -1,8 +1,8 @@
 const router = require('express').Router()
-
-const { registration } = require('../../controllers/auth')
+const authenticate = require('../../middlewares/authenticate')
+const { registration, login } = require('../../controllers/auth')
 router
     .post('/registration', registration)
-    .post('/login')
+    .post('/login', login)
 
 module.exports = router
