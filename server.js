@@ -14,8 +14,9 @@ app.use(morgan("dev"));
 app.use(router)
 
 app.use((err, req, res, next) => {
-    console.log(err);
-    res.status(500).json({ message: err && err.message || "Server Error" })
+    const message = err.message ? err.message : 'Server Error Occured';
+    const status = err.status ? err.status : 500
+    res.status(status).json({ message })
 })
 
 connect('mongodb://localhost:27017/new-db')
