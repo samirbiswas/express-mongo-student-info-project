@@ -19,7 +19,7 @@ app.use((err, req, res, next) => {
     res.status(status).json({ message })
 })
 
-connect('mongodb://localhost:27017/new-db')
+connect('mongodb://localhost:27017/student-db')
     .then(() => {
         console.log("Database connected");
     })

@@ -22,3 +22,7 @@ exports.createNewUser = ({ name, email, password, roles, accountStatus }) => {
 
     return user.save()
 }
+
+exports.updateUser = (id, data) => {
+    return User.findByIdAndUpdate(id, { ...data }, { new: true })
+}
